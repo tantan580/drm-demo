@@ -66,14 +66,14 @@ int main(int argc, char **argv)
     drmModeRes *res;
     uint32_t conn_id;
     uint32_t crtc_id;
-
+    //open the drm device
     fd = open("/dev/dri/card0", O_RDWR);
     //fd = find_drm_device(&res);
     if (-1 == fd) {
         printf("no drm device found,fd = :%s!\n", fd);
         return -1;
     }
-
+    //get connector for display mode
     res = drmModeGetResources(fd);
     crtc_id = res->crtcs[0];
     conn_id = res->connectors[0];
