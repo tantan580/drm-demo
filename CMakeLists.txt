@@ -6,7 +6,7 @@ SET(CMAKE_BUILD_TYPE Debug)
 
 include_directories(/usr/include/libdrm)
 
-add_executable(${PROJECT_NAME} modeset-single-buffer.c)
+add_executable(${PROJECT_NAME} modeset-double-buffer.c)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
     -ldrm
