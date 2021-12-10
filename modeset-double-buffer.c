@@ -23,8 +23,13 @@ int main(int argc, char **argv)
 	drmModeRes *res;
 	uint32_t conn_id;
 	uint32_t crtc_id;
-
-	fd = open("/dev/dri/card0", O_RDWR | O_CLOEXEC);
+	
+    fd = open("/dev/dri/card0", O_RDWR | O_CLOEXEC);
+    //fd = find_drm_device(&res);
+    if (-1 == fd) {
+        printf("no drm device found,fd = :%s!\n", fd);
+        return -1;
+    }
 
 	res = drmModeGetResources(fd);
 	crtc_id = res->crtcs[0];

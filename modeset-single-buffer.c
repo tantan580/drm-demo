@@ -8,7 +8,6 @@
 #include <sys/mman.h>
 #include <time.h>
 #include <unistd.h>
-
 #include "common.h"
 
 struct buffer_object buf;
@@ -39,6 +38,7 @@ int main(int argc, char **argv)
 
     modeset_create_fb(fd, &buf);
 
+    //刷新屏幕
     drmModeSetCrtc(fd, crtc_id, buf.fb_id, 0, 0, &conn_id, 1, &conn->modes[0]);
 
     getchar();

@@ -1,7 +1,11 @@
 project('drm-deom', 'c')
 
 drmdep = dependency('libdrm')
-executable('drm-singlebuffer', 'modeset-single-buffer.c',
+executable('modeset-single-buffer', 'modeset-single-buffer.c',
             dependencies : drmdep)
 
-executable('drm-doublebuffer', 'modeset-double-buffer.c',dependencies : drmdep)
+executable('modeset-doublebuffer', 'modeset-double-buffer.c',dependencies : drmdep)
+
+executable('modeset-vsync', 'modeset-vsync.c',dependencies : drmdep)
+
+executable('modeset-plane-test', 'modeset-plane-test.c',dependencies : drmdep)

@@ -129,12 +129,11 @@ static int modeset_create_fb_color(int fd, struct buffer_object *bo, uint32_t co
 //destroy fb
 static void modeset_destory_fb(int fd, struct buffer_object *bo)
 {
-    struct drm_mode_destroy_dumb destory = {};
+    struct drm_mode_destroy_dumb destroy = {};
     drmModeRmFB(fd, bo->fb_id);
     munmap(bo->vaddr, bo->size);
-    //destroy.handle = bo->handle;
-    drmIoctl(fd, DRM_IOCTL_MODE_DESTROY_DUMB, &destory);
+    destroy.handle = bo->handle;
+    drmIoctl(fd, DRM_IOCTL_MODE_DESTROY_DUMB, &destroy);
 }
-
 
 #endif
