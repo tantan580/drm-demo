@@ -1,3 +1,5 @@
+#define _GNU_SOURCE
+
 #include <errno.h>
 #include <fcntl.h>
 #include <stdbool.h>
@@ -20,7 +22,7 @@ int main(int argc, char **argv)
     uint32_t conn_id;
     uint32_t crtc_id;
     //open the drm device
-    fd = open("/dev/dri/card0", O_RDWR);
+    fd = open("/dev/dri/card0", O_RDWR | O_CLOEXEC);
     //fd = find_drm_device(&res);
     if (-1 == fd) {
         printf("no drm device found,fd = :%s!\n", fd);

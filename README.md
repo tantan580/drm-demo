@@ -61,3 +61,15 @@ Plane的历史
 | Cursor  | 光标图层，一般用于PC系统，用于显示鼠标    |
 | Overlay | 叠加图层，通常用于YUV格式的视频图层       |
 | Primary | 主要图层，通常用于仅支持RGB格式的简单图层 |
+
+## **Atomic**at
+
+前面几章在如今的架构中其实早已被标记为过时(legacy)的接口
+
+### **Property**
+
+Atomic操作必须依赖的基本元素，**Property（属性）**
+
+所谓Property，其实就是把前几篇的legacy接口传入的参数单独抽出来，做成一个个独立的全局属性。通过设置这些属性参数，即可完成对显示参数的设置。
+
+Property的结构简单概括主要由3部分组成：`name`、`id` 和 `value`。其中 `id`为该property在DRM框架中全局唯一的标识符。

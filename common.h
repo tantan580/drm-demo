@@ -136,4 +136,23 @@ static void modeset_destory_fb(int fd, struct buffer_object *bo)
     drmIoctl(fd, DRM_IOCTL_MODE_DESTROY_DUMB, &destroy);
 }
 
+//get property
+
+static uint32_t get_property_id(int fd, drmModeObjectProperties *props, const char *name)
+{
+    drmModePropertyPtr property;
+    uint32_t i, id = 0;
+
+    //find property according to the name
+    for (i = 0; i < props->count_props; i++) {
+        property = drmModeGetProperty(fd, props->props[i]);
+        if (!strcmp(property->name, name))
+            id = property->prop_id;
+        drmModeFreeProperty(property);
+
+        if (id)
+            break;
+    }
+    return id;
+}
 #endif
