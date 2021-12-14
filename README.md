@@ -62,6 +62,10 @@ Plane的历史
 | Overlay | 叠加图层，通常用于YUV格式的视频图层       |
 | Primary | 主要图层，通常用于仅支持RGB格式的简单图层 |
 
+*在honor机器上运行./build/tests/modetest/modetest -P 52@62:1920x1080*
+
+*发现plane52号和crtc62号是绑定的，因此plane_id必须是52号drmModeSetPlane函数才有效。 atomicat操作也是一样的。*
+
 ## **Atomic**at
 
 前面几章在如今的架构中其实早已被标记为过时(legacy)的接口

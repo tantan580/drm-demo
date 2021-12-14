@@ -35,15 +35,29 @@ int main(int argc, char **argv)
     res = drmModeGetResources(fd);
     crtc_id = res->crtcs[0];
 	conn_id = res->connectors[0];
+    printf("crtc_id : %d -->\n", crtc_id);
 
     drmSetClientCap(fd, DRM_CLIENT_CAP_UNIVERSAL_PLANES, 1);
     plane_res = drmModeGetPlaneResources(fd);
     if (!plane_res) {
-		fprintf(stderr, "drmModeGetPlaneResources failed: %s\n",
-			strerror(errno));
+		fprintf(stderr, "drmModeGetPlaneResources failed: %s\n",strerror(errno));
 		return res;
 	}
-    plane_id = plane_res->planes[0];
+    //在honor机器上运行./build/tests/modetest/modetest -P 52@62:1920x1080
+    //发现plane52号和crtc62号是绑定的，因此plane_id必须是52号
+    for (int i = 0; i < plane_res->count_planes; i++) {
+        drmModePlane *ovr = drmModeGetPlane(fd, plane_res->planes[i]);
+        if (!ovr)
+            continue;
+        printf("crtc_id: %d, plane_id: %d, fb_id: %d, crtc_x : %d, crtc_y: %d, x: %d, y: %d\n",
+            ovr->crtc_id, ovr->plane_id, ovr->fb_id, ovr->crtc_x, ovr->crtc_y, ovr->x, ovr->y);
+        printf("----------------------------------------\n");
+        if (ovr->crtc_id == crtc_id) {
+            plane_id = plane_res->planes[i];
+            break;
+        }          
+    }
+    //plane_id = plane_res->planes[3];
     printf("plane_id : %d --> count_planes : %d \n", plane_id, plane_res->count_planes);
 
     conn = drmModeGetConnector(fd, conn_id);
@@ -69,7 +83,8 @@ int main(int argc, char **argv)
     uint32_t src_x = 0; uint32_t src_y = 0;
     uint32_t src_w = buf.width;
     uint32_t src_h= buf.height;
-    //此处调用不成功，不知道什么原因 
+    //在honor机器上运行./build/tests/modetest/modetest -P 52@62:1920x1080
+    //发现plane52号和crtc62号是绑定的，因此plane_id必须是52号drmModeSetPlane函数才有效
 	if (drmModeSetPlane(fd, plane_id, crtc_id, buf.fb_id, 0,
 			crtc_x, crtc_y, crtc_w, crtc_h,
 			src_x, src_y, src_w << 16, src_h << 16)) {
@@ -79,7 +94,7 @@ int main(int argc, char **argv)
     }
 
     getchar();        
-    modeset_destory_fb(fd, &buf);
+    modeset_destroy_fb(fd, &buf);
 
     drmModeFreeConnector(conn);
     drmModeFreePlaneResources(plane_res);

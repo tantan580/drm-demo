@@ -51,7 +51,7 @@ int main(int argc, char **argv)
     fd = open("/dev/dri/card0", O_RDWR);
     //fd = find_drm_device(&res);
     if (-1 == fd) {
-        printf("no drm device found,fd = :%s!\n", fd);
+        printf("no drm device found,fd = :%d!\n", fd);
         return -1;
     }
 
@@ -75,8 +75,8 @@ int main(int argc, char **argv)
         drmHandleEvent(fd, &ev);
     }
     
-    modeset_destory_fb(fd, &buf[1]);
-    modeset_destory_fb(fd, &buf[0]);
+    modeset_destroy_fb(fd, &buf[1]);
+    modeset_destroy_fb(fd, &buf[0]);
 
     drmModeFreeConnector(conn);
     drmModeFreeResources(res);

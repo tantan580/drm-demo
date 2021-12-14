@@ -127,7 +127,7 @@ static int modeset_create_fb_color(int fd, struct buffer_object *bo, uint32_t co
 }
 
 //destroy fb
-static void modeset_destory_fb(int fd, struct buffer_object *bo)
+static void modeset_destroy_fb(int fd, struct buffer_object *bo)
 {
     struct drm_mode_destroy_dumb destroy = {};
     drmModeRmFB(fd, bo->fb_id);

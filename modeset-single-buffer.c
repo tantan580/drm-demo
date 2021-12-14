@@ -25,7 +25,7 @@ int main(int argc, char **argv)
     fd = open("/dev/dri/card0", O_RDWR | O_CLOEXEC);
     //fd = find_drm_device(&res);
     if (-1 == fd) {
-        printf("no drm device found,fd = :%s!\n", fd);
+        printf("no drm device found,fd = :%d!\n", fd);
         return -1;
     }
     //get connector for display mode
@@ -44,7 +44,7 @@ int main(int argc, char **argv)
     drmModeSetCrtc(fd, crtc_id, buf.fb_id, 0, 0, &conn_id, 1, &conn->modes[0]);
 
     getchar();
-    modeset_destory_fb(fd, &buf);
+    modeset_destroy_fb(fd, &buf);
 
     drmModeFreeConnector(conn);
     drmModeFreeResources(res);
