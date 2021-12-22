@@ -52,6 +52,10 @@ demo_srcs = {
         'src' : 'drm-test.cpp',
         'deps' : [drm_dep, m_dep, ],
     },
+    'drm-tty' : {
+        'src' : 'drm-tty.cpp',
+        'deps' : [drm_dep, ],
+    },
 }
 
 foreach name, info : demo_srcs
