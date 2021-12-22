@@ -15,8 +15,10 @@ project(
 
 drm_dep = dependency('libdrm')
 egl_dep = dependency('egl')
+gles_dep = dependency('glesv2')
 jpeg_dep = dependency('libjpeg')
 png_dep  = dependency('libpng')
+gbm_dep = dependency('gbm')
 
 cpp = meson.get_compiler('cpp')
 m_dep = cpp.find_library('m')
@@ -56,6 +58,11 @@ demo_srcs = {
         'src' : 'drm-tty.cpp',
         'deps' : [drm_dep, ],
     },
+    'egl-drm-pageflip' : {
+        'src' : 'egl-drm-pageflip.cpp',
+        'deps' : [drm_dep, egl_dep, gbm_dep, gles_dep],
+    },
+
 }
 
 foreach name, info : demo_srcs
